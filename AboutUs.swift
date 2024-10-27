@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct InfoView: View {
-    
     private let imageNames = ["weedex3", "weedex0"]
     private let imageOffsets: [CGFloat] = [-110, 50]
     private let buttonImageNames = ["instagram", "facebook", "Twitter", "tiktok"]
@@ -9,12 +8,13 @@ struct InfoView: View {
         URL(string: "https://www.instagram.com/weedexlawncare/")!,
         URL(string: "https://www.facebook.com/weedexlawn")!,
         URL(string: "https://www.twitter.com/weedexlawncare")!,
-        URL(string: "https://www.tiktok.com/@weedexlawn")!
+        URL(string: "https://www.tiktok.com/@weedexlawn")!,
     ]
-    
+
     @State private var currentImageIndex = 0
     @State private var timer: Timer?
-    
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         ZStack {
             // Background image
@@ -34,18 +34,17 @@ struct InfoView: View {
                 .onDisappear {
                     timer?.invalidate()
                 }
-            
-            
+
             VStack {
                 Spacer()
-                
+
                 VStack(alignment: .center) {
                     Text("We're Family Owned")
                         .font(.largeTitle) // Slightly larger text
                         .fontWeight(.bold)
                         .foregroundColor(.black)
                         .padding([.leading, .trailing, .top], 10)
-                    
+
                     ScrollView {
                         VStack(alignment: .leading) {
                             Text(LongTextProvider.longText)
@@ -62,9 +61,9 @@ struct InfoView: View {
                     .padding(.horizontal)
                     .padding(.top, 0) // Shift the scroll view down slightly
                 }
-                
+
                 HStack {
-                    ForEach(0..<buttonImageNames.count, id: \.self) { index in
+                    ForEach(0 ..< buttonImageNames.count, id: \.self) { index in
                         Button(action: {
                             // Open the corresponding URL
                             if let url = buttonURLs[safe: index] {
@@ -84,12 +83,13 @@ struct InfoView: View {
                     }
                 }
                 .padding(.top, 10) // Adjust top padding between scroll view and buttons
-                
+
                 Spacer() // Add spacer here
-                
+
                 HStack {
-                
-                    NavigationLink(destination: MainHubView().navigationBarHidden(true)) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
                         Image(systemName: "arrow.left")
                             .resizable()
                             .frame(width: 30, height: 30)
@@ -97,10 +97,9 @@ struct InfoView: View {
                             .padding()
                             .background(Color.black.opacity(0.7))
                             .cornerRadius(360)
-                    }
+                    })
                     .padding(.bottom, 5)
-                    
-                    
+
                     NavigationLink(destination: EULAView().navigationBarHidden(true)) {
                         Image(systemName: "info.circle.fill")
                             .resizable()
@@ -113,7 +112,6 @@ struct InfoView: View {
                     }
                     .padding(.bottom, 5)
                 }
-
             }
             .padding(.top, 20)
         }
@@ -133,6 +131,3 @@ struct InfoView_Previews: PreviewProvider {
         InfoView()
     }
 }
-
-
-

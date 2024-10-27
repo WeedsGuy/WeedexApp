@@ -38,6 +38,8 @@ struct EULAView: View {
     [972-727-9207]
     """
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -50,14 +52,16 @@ struct EULAView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 // "Return" button that navigates to MainHubView
-                NavigationLink(destination: InfoView().navigationBarHidden(true)) {
+                Button(action: {
+                    dismiss()
+                }, label: {
                     Text("Return")
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.weeder)
                         .cornerRadius(10)
-                }
+                })
             }
         }
     }
