@@ -1,6 +1,5 @@
 import SwiftUI
 
-
 extension Color {
     static let weeder = Color(red: 0.0, green: 0.666, blue: 0.0)
 }
@@ -8,6 +7,7 @@ extension Color {
 struct MainHubView: View {
     @EnvironmentObject var store: BlogPostsStore
     @State private var showPodView = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationView {
@@ -81,7 +81,7 @@ struct MainHubView: View {
                         // Navigation Link to News
                         NavigationLink(destination: NavigationContainerView(content: newsView()).navigationBarBackButtonHidden(true)) {
                             VStack {
-                                Image(systemName:"newspaper")
+                                Image(systemName: "newspaper")
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundColor(.white)
@@ -101,7 +101,7 @@ struct MainHubView: View {
                                     .fixedSize(horizontal: true, vertical: false)
                             }
                         }
-                    } 
+                    }
                     .padding(.horizontal)
                 }
                 .padding(.top, 10)
@@ -111,7 +111,9 @@ struct MainHubView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        NavigationLink(destination: Opening().navigationBarBackButtonHidden(true)) {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
                             VStack {
                                 Image(systemName: "house.fill")
                                     .resizable()
@@ -129,7 +131,7 @@ struct MainHubView: View {
                             .padding(.leading, 15)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .shadow(color: .gray, radius: 5, x: 2, y: 2)
-                        }
+                        })
                         .padding()
                         Spacer()
                         NavigationLink(destination: InfoView().navigationBarBackButtonHidden(true)) {
@@ -196,6 +198,3 @@ struct MainHubView_Previews: PreviewProvider {
             .environmentObject(BlogPostsStore())
     }
 }
-
-
-

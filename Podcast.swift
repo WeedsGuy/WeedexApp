@@ -4,7 +4,7 @@ import WebKit
 struct PodView: View {
     let videoLinks = VideoInfo.videoLinks
     @State private var loadedVideos = Set<String>()
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     func loadVideo(_ link: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -56,16 +56,15 @@ struct PodView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        NavigationLink(destination: MainHubView()
-                                        .edgesIgnoringSafeArea(.all)
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true)) {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
                             Image(systemName: "arrow.left.circle.fill")
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.black)
                                 .padding()
-                        }
+                        })
                         Spacer()
                     }
                 }

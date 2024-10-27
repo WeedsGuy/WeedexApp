@@ -8,6 +8,7 @@ struct newsView: View {
     }
 
     @State private var isAtBottom: Bool = false
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationView {
@@ -37,14 +38,17 @@ struct newsView: View {
                         // Featured article
                         if featuredPosts.count > 0 {
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Featured Post")
-                                    .font(.title.bold())
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .background(Color.white.opacity(0.6))
-                                    .cornerRadius(8)
-                                    .foregroundColor(.black)
-                                    .padding(.leading, 125)
+                                HStack {
+                                    Spacer()
+                                    Text("Featured Post")
+                                        .font(.title.bold())
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .background(Color.white.opacity(0.6))
+                                        .cornerRadius(8)
+                                        .foregroundColor(.black)
+                                    Spacer()
+                                }
 
                                 LazyVStack {
                                     ForEach(featuredPosts) { post in
@@ -59,14 +63,17 @@ struct newsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("New Posts")
-                                .font(.title.bold())
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 2)
-                                .background(Color.white.opacity(0.6))
-                                .cornerRadius(8)
-                                .foregroundColor(.black)
-                                .padding(.leading, 90)
+                            HStack {
+                                Spacer()
+                                Text("New Posts")
+                                    .font(.title.bold())
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 2)
+                                    .background(Color.white.opacity(0.6))
+                                    .cornerRadius(8)
+                                    .foregroundColor(.black)
+                                Spacer()
+                            }
 
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHStack(spacing: 10) {
@@ -98,11 +105,7 @@ struct newsView: View {
                             HStack {
                                
                                 Button(action: {
-                                   
-                                    if let window = UIApplication.shared.windows.first {
-                                        window.rootViewController = UIHostingController(rootView: MainHubView().environmentObject(store))
-                                        window.makeKeyAndVisible()
-                                    }
+                                    dismiss()
                                 })
                                 {
                                     Image(systemName: "arrow.left.circle.fill")
